@@ -1,52 +1,52 @@
-# 📝 ReCall — история буфера обмена
+# 📝 ReCall — Clipboard History
 
-**ReCall** — это лёгкое и утилитарное приложение для Windows, которое сохраняет всё, что ты копировал. Оно помогает избежать потери данных из буфера обмена.
+ReCall is a lightweight and utilitarian Windows app that saves everything you copy. It helps prevent loss of data from the clipboard.
 
-## 🔍 Проблема
+## 🔍 Problem
 
-Скопировал важный текст, случайно перезаписал — и нужное пропало.  
-Буфер обмена хранит только **одно значение**, и всё, что было до него, исчезает.
+You copy important text, accidentally overwrite it — and the needed data is lost.
+The clipboard only holds one value, and everything before it disappears.
 
-## ✅ Решение
+## ✅ Solution
 
-**ReCall** сохраняет полную историю буфера обмена и позволяет быстро вернуться к нужным записям.
-
----
-
-## 🚀 Возможности
-
-- 📌 **История** — всё, что ты копировал, остаётся в приложении
-- 🧠 **Текущее значение** — что сейчас в буфере
-- 🕓 **Предыдущее значение** — что было до этого
-- 🧾 **Полный список** — все записи в удобной ленте
+ReCall saves the full clipboard history and lets you quickly get back to the entries you need.
 
 ---
 
-## 🖱️ Управление
+## 🚀 Features
 
-- 🔘 *ЛКМ по записи* — мгновенно возвращает её в буфер обмена
-- 📥 **Скрыть** — сворачивает приложение в фон
-- ❌ **Выход** — завершает работу
-- 🧊 **Ctrl + Shift + R** — глобальная горячая клавиша для открытия
-
----
-
-## 🛠️ Особенности
-
-- Запускается на любом ПК с Windows
-- Не грузит систему и работает в фоне
-- Минималистичный интерфейс без лишнего
-- Не использует облака, сторонние сервисы и телеметрию
+📌 History — everything you copied stays in the app
+🧠 Current value — what’s currently in the clipboard
+🕓 Previous value — what was before it
+🧾 Full list — all entries in a convenient feed
 
 ---
 
-## 📦 Обновления
+## 🖱️ Controls
 
-Я создавал ReCall для себя и использую каждый день.  
-На данном этапе функционал меня полностью устраивает.
+🔘 Left-click on an entry — instantly restores it to the clipboard
+📥 Hide — minimizes the app to the background
+❌ Exit — closes the app
+🧊 Ctrl + Shift + R — global hotkey to open the app
 
-Однако, если у тебя есть идеи по улучшению UX — пиши на почту.  
-Если предложение разумное — с удовольствием доработаю.
+---
+
+## 🛠️ Details
+
+Runs on any Windows PC
+Lightweight and runs silently in the background
+Minimalist interface without clutter
+Does not use cloud services, third-party tools, or telemetry
+
+---
+
+## 📦 Updates
+
+I built ReCall for myself and use it daily.
+At this stage, the functionality fully satisfies me.
+
+However, if you have ideas to improve the UX — write me an email.
+If the suggestion makes sense, I’ll gladly implement it.
 
 ---
 
