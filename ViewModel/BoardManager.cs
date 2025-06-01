@@ -22,8 +22,8 @@ namespace ReCall___.ViewModel
         CancellationTokenSource _cts = new CancellationTokenSource();
 
 
-        private string _currentBoardNote;
-        private string _previousBoardNote;
+        private string _currentBoardNote = string.Empty;
+        private string _previousBoardNote = "";
 
 
         public string CurrentBoardNote
@@ -55,13 +55,6 @@ namespace ReCall___.ViewModel
 
         public async Task Main ()
         {
-            CurrentBoardNote = ClipboardService.GetText();
-            if (!string.IsNullOrEmpty(CurrentBoardNote))
-            {
-                if (NotesList.Contains(CurrentBoardNote))
-                { return; }
-                NotesList.Add(CurrentBoardNote);
-            }
             await BoardChecker(_cts.Token);
         }
 
@@ -78,12 +71,13 @@ namespace ReCall___.ViewModel
                 if (!string.IsNullOrEmpty(text) &&
                     text != CurrentBoardNote &&
                     text != PreviousBoardNote &&
-                    !NotesList.Contains(text.Trim()))
+                    !NotesList.Contains(text))
                 {
                     PreviousBoardNote = CurrentBoardNote;
                     CurrentBoardNote = text;
                     NotesList.Insert(0, CurrentBoardNote);
                 }
+
             }
         }
 
