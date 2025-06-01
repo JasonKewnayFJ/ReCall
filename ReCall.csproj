@@ -8,15 +8,15 @@
     <ImplicitUsings>enable</ImplicitUsings>
     <UseWPF>true</UseWPF>
     <UseWindowsForms>False</UseWindowsForms>
-    <ApplicationIcon>Common\Без имени-1.ico</ApplicationIcon>
+    <ApplicationIcon>Common\ICCCo.ico</ApplicationIcon>
   </PropertyGroup>
 
   <ItemGroup>
-    <None Remove="Common\Без имени-1.ico" />
+    <None Remove="Common\ICCCo.ico" />
   </ItemGroup>
 
   <ItemGroup>
-    <Content Include="Common\Без имени-1.ico" />
+    <Content Include="Common\ICCCo.ico" />
   </ItemGroup>
 
   <ItemGroup>
@@ -29,7 +29,7 @@
   </ItemGroup>
 
   <ItemGroup>
-    <Resource Include="Common\Без имени-1.ico">
+    <Resource Include="Common\ICCCo.ico">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Resource>
   </ItemGroup>

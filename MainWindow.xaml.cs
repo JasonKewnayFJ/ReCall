@@ -189,7 +189,7 @@ namespace ReCall___
         }
         protected override void OnClosing ( CancelEventArgs e )
         {
-            BM?.StopChecker(); // ← всё, больше ничего не нужно
+            BM?.StopChecker(); 
             base.OnClosing(e);
         }
 
@@ -199,8 +199,7 @@ namespace ReCall___
         private void ListBoxItem_MouseLeftButtonUp ( object sender, MouseButtonEventArgs e )
         {
             var item = (ListBoxItem)sender;
-            var data = item.DataContext; // это элемент из NotesList
-                                         // Тут твоя логика
+            var data = item.DataContext; 
             string selectedItem = data?.ToString();
             BM.ReUseNote(selectedItem);
         }

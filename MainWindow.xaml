@@ -20,7 +20,7 @@
             </Grid.RowDefinitions>
 
             <StackPanel Grid.Row="0" Grid.RowSpan="2" VerticalAlignment="Center" >
-                <TextBlock Text="ReCall" Foreground="Black" FontFamily="Consolas" FontSize="30" Margin="10 0 0 0" />
+                <TextBlock Text="ReCall" Foreground="Black" FontFamily="Verdana" FontSize="30" Margin="10 0 0 0" />
             </StackPanel>
 
             <StackPanel Orientation="Horizontal" Grid.Row="0" Grid.Column="3" HorizontalAlignment="Right" VerticalAlignment="Top" Margin="5" >
@@ -43,7 +43,7 @@
             <StackPanel>
                     <Border CornerRadius="10" Background="White" Padding="5" Margin="0 0 0 3">
                         <StackPanel>
-                            <TextBlock Text="Сurrent clipboard content:" HorizontalAlignment="Left" TextAlignment="Left" Background="Transparent"/>
+                            <TextBlock Text="Сurrent clipboard content:" HorizontalAlignment="Left" TextAlignment="Left" Background="Transparent" FontFamily="Arial" FontWeight="Bold"/>
                             <Separator Background="Black"/>
                             <ScrollViewer HorizontalScrollBarVisibility="Auto" VerticalScrollBarVisibility="Disabled">
                                 <TextBlock x:Name="Note" Text="{Binding CurrentBoardNote}"  HorizontalAlignment="Left" TextAlignment="Left" Background="Transparent" Height="50" />
@@ -55,7 +55,7 @@
                     </Border>
                     <Border CornerRadius="10" Background="White" Padding="5" Margin="0 0 0 3">
                         <StackPanel>
-                            <TextBlock Text="Previous clipboard content:"  HorizontalAlignment="Stretch" TextAlignment="Left" Background="Transparent"/>
+                            <TextBlock Text="Previous clipboard content:"  HorizontalAlignment="Stretch" TextAlignment="Left" Background="Transparent" FontFamily="Arial" FontWeight="Bold"/>
                             <Separator Background="Black"/>
                             <ScrollViewer HorizontalScrollBarVisibility="Auto" VerticalScrollBarVisibility="Disabled">
                                 <TextBlock x:Name="PrevNote" Text="{Binding PreviousBoardNote}" HorizontalAlignment="Left" TextAlignment="Left" Background="Transparent"  Height="50" />
@@ -69,7 +69,7 @@
 
                         <StackPanel>
                         <StackPanel>
-                        <TextBlock Text="Clipboard History"/>
+                        <TextBlock Text="Clipboard History:" FontFamily="Arial" FontWeight="Bold"/>
                             
                         </StackPanel>
                             <Separator Background="Black"/>
