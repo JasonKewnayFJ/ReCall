@@ -9,45 +9,71 @@
         WindowStyle="None"
         AllowsTransparency="True"
         Background="Transparent"
-        Title="MainWindow" MaxHeight="560" MinWidth="400" Height="600" Width="450">
-    <Border CornerRadius="10" Background="#E0A363" Padding="10" MouseDown="Border_MouseDown" >
-        <Grid>
+        Title="MainWindow" Height="750" MaxHeight="750" MinHeight="750" Width="500">
+    <Border CornerRadius="10" Background="#10161D" Padding="10" MouseDown="Border_MouseDown">
+        <Grid ShowGridLines="True">
             <Grid.RowDefinitions>
                 <RowDefinition Height="Auto"/>
-                <RowDefinition Height="Auto" />
-                <RowDefinition Height="*"/>
-                <RowDefinition Height="*"/>
+                <RowDefinition Height="750" />
             </Grid.RowDefinitions>
 
-            <StackPanel Grid.Row="0" Grid.RowSpan="2" VerticalAlignment="Center" >
-                <TextBlock Text="ReCall" Foreground="Black" FontFamily="Verdana" FontSize="30" Margin="10 0 0 0" />
+            <StackPanel Grid.Row="0" VerticalAlignment="Center" >
+                <TextBlock Text="ReCall" Foreground="White" FontFamily="Verdana" FontSize="30" Margin="10 0 0 0" />
             </StackPanel>
 
-            <StackPanel Orientation="Horizontal" Grid.Row="0" Grid.Column="3" HorizontalAlignment="Right" VerticalAlignment="Top" Margin="5" >
-                <Border CornerRadius="10" Background="#B04B37">
+            <StackPanel Orientation="Horizontal" Grid.Row="0" HorizontalAlignment="Right" VerticalAlignment="Top" Margin="5" >
+                <Border CornerRadius="10" Background="#2C3E50">
 
-                    <Button Content="▾" Click="HideWindow" x:Name="HideBTN" Background="Transparent" Foreground="Black" BorderBrush="black" BorderThickness="0" ToolTip="Hide it"/>
+                    <Button Content="▾" Click="HideWindow" x:Name="HideBTN" Background="Transparent" Foreground="White" BorderBrush="black" BorderThickness="0" ToolTip="Hide it" Style="{StaticResource MaterialDesignFlatButton}"/>
+                    
+                    
                 </Border>
 
 
 
-                <Border CornerRadius="10" Background="#B04B37" Margin="5 0 0 0">
-                    <Button Content="🞬" Click="CloseWindow" x:Name="CloseBTN"  Background="Transparent" Foreground="Black" BorderBrush="black" BorderThickness="0" ToolTip="Shut it down"/>
+                <Border CornerRadius="10" Background="#2C3E50" Margin="5 0 0 0">
+                    <Button Content="🞬" Click="CloseWindow" x:Name="CloseBTN"  Background="Transparent" Foreground="White" BorderBrush="black" BorderThickness="0" ToolTip="Shut it down"/>
                 </Border>
 
             </StackPanel>
 
 
 
-            <Border Grid.Row="2" Grid.RowSpan="2" Grid.Column="0" Grid.ColumnSpan="2" Background="#B04B37" CornerRadius="10" Margin="5" Padding="10">
+            <Border Grid.Row="1" Height="745" Background="#2C3E50" CornerRadius="10" Margin="10" Padding="15">
             <StackPanel>
                     <Border CornerRadius="10" Background="White" Padding="5" Margin="0 0 0 3">
                         <StackPanel>
                             <TextBlock Text="Сurrent clipboard content:" HorizontalAlignment="Left" TextAlignment="Left" Background="Transparent" FontFamily="Arial" FontWeight="Bold"/>
                             <Separator Background="Black"/>
-                            <ScrollViewer HorizontalScrollBarVisibility="Auto" VerticalScrollBarVisibility="Disabled">
-                                <TextBlock x:Name="Note" Text="{Binding CurrentBoardNote}"  HorizontalAlignment="Left" TextAlignment="Left" Background="Transparent" Height="50" />
-                                
+                            <ScrollViewer HorizontalScrollBarVisibility="Auto" VerticalScrollBarVisibility="Disabled" >
+                                <Button x:Name="Note" Content="{Binding CurrentBoardNote}" Height="70" Padding="10" VerticalAlignment="Stretch" VerticalContentAlignment="Stretch" Margin="10">
+                                    <Button.Style>
+                                        <Style TargetType="Button">
+                                            <Setter Property="Background" Value="#2C3E50"/>
+                                            <Setter Property="Foreground" Value="White"/>
+                                            <Setter Property="BorderThickness" Value="0"/>
+                                            <Setter Property="Padding" Value="10"/>
+                                            <Setter Property="FontSize" Value="14"/>
+                                            <Setter Property="Cursor" Value="Hand"/>
+                                            <Setter Property="Template">
+                                                <Setter.Value>
+                                                    <ControlTemplate TargetType="Button">
+                                                        <Border Background="{TemplateBinding Background}" CornerRadius="12">
+                                                            <ContentPresenter HorizontalAlignment="Center" VerticalAlignment="Center"/>
+                                                        </Border>
+                                                    </ControlTemplate>
+                                                </Setter.Value>
+                                            </Setter>
+                                            <Style.Triggers>
+                                                <Trigger Property="IsMouseOver" Value="True">
+                                                    <Setter Property="Background" Value="#1F2935"/>
+                                                </Trigger>
+                                            </Style.Triggers>
+                                        </Style>
+                                    </Button.Style>
+                                </Button>
+
+
                             </ScrollViewer>
                             
                         </StackPanel>
@@ -58,14 +84,44 @@
                             <TextBlock Text="Previous clipboard content:"  HorizontalAlignment="Stretch" TextAlignment="Left" Background="Transparent" FontFamily="Arial" FontWeight="Bold"/>
                             <Separator Background="Black"/>
                             <ScrollViewer HorizontalScrollBarVisibility="Auto" VerticalScrollBarVisibility="Disabled">
-                                <TextBlock x:Name="PrevNote" Text="{Binding PreviousBoardNote}" HorizontalAlignment="Left" TextAlignment="Left" Background="Transparent"  Height="50" />
+
+
+                                <Button x:Name="PrevNote" Content="{Binding PreviousBoardNote}" Height="70" Padding="10" VerticalAlignment="Stretch" VerticalContentAlignment="Stretch" Margin="10">
+                                    <Button.Style>
+                                        <Style TargetType="Button">
+                                            <Setter Property="Background" Value="#2C3E50"/>
+                                        <Setter Property="Foreground" Value="White"/>
+                                        <Setter Property="BorderThickness" Value="0"/>
+                                        <Setter Property="Padding" Value="10"/>
+                                        <Setter Property="FontSize" Value="14"/>
+                                        <Setter Property="Cursor" Value="Hand"/>
+                                        <Setter Property="Template">
+                                            <Setter.Value>
+                                                <ControlTemplate TargetType="Button">
+                                                    <Border Background="{TemplateBinding Background}" CornerRadius="12">
+                                                        <ContentPresenter HorizontalAlignment="Center" VerticalAlignment="Center"/>
+                                                    </Border>
+                                                </ControlTemplate>
+                                            </Setter.Value>
+                                        </Setter>
+                                        <Style.Triggers>
+                                            <Trigger Property="IsMouseOver" Value="True">
+                                                    <Setter Property="Background" Value="#1F2935"/>
+                                            </Trigger>
+                                        </Style.Triggers>
+                                    </Style>
+                                    </Button.Style>
+                                </Button>
+                            
+                            
+                            
                             </ScrollViewer>
                             
                         </StackPanel>
 
                     </Border>
                 
-                    <Border CornerRadius="10" Background="White" Padding="5" Margin="0 0 0 3">
+                    <Border Height="370" Grid.Row="1" CornerRadius="10" Background="White" Padding="10" Margin="0 0 0 3">
 
                         <StackPanel>
                         <StackPanel>
@@ -73,22 +129,24 @@
                             
                         </StackPanel>
                             <Separator Background="Black"/>
-                            <StackPanel>
-                        <ListBox ItemsSource="{Binding NotesList}" Height="230" HorizontalContentAlignment="Left" ScrollViewer.CanContentScroll="True" >
+                            <StackPanel VerticalAlignment="Center" HorizontalAlignment="Stretch">
+                        <ListBox ItemsSource="{Binding NotesList}" VerticalAlignment="Stretch" HorizontalAlignment="Stretch" ScrollViewer.CanContentScroll="True" Height="290" Margin="0 0 0 2" ScrollViewer.VerticalScrollBarVisibility="Hidden">
                             <ListBox.ItemContainerStyle>
                                 <Style TargetType="ListBoxItem">
-                                    <Setter Property="HorizontalContentAlignment" Value="Stretch" />
+                                    <Setter Property="HorizontalContentAlignment" Value="Center" />
                                     <Setter Property="VerticalContentAlignment" Value="Center" />
-                                    <Setter Property="Margin" Value="2" />
-                                    <Setter Property="Padding" Value="10" />
-                                    <Setter Property="MaxHeight" Value="70" />
-                                    <Setter Property="ToolTip" Value="Click to Copy"/>
+                                    <Setter Property="Margin" Value="3" />
+                                            <Setter Property="Height" Value="70"/>
+                                            <Setter Property="Foreground" Value="White"/>
+                                            <Setter Property="Padding" Value="12" />
+                                            <Setter Property="Cursor" Value="Hand"/>
+                                            <Setter Property="ToolTip" Value="Click to Copy"/>
                                     <Setter Property="Template">
                                         <Setter.Value>
                                             <ControlTemplate TargetType="ListBoxItem">
                                                 <Border x:Name="Bd"
-                                                Background="#E0A363"
-                                                CornerRadius="10"
+                                                Background="#2C3E50"
+                                                CornerRadius="5"
                                                 BorderThickness="1"
                                                 BorderBrush="Transparent"
                                                 Padding="{TemplateBinding Padding}"
@@ -100,11 +158,11 @@
                                                 </Border>
                                                 <ControlTemplate.Triggers>
                                                     <Trigger Property="IsMouseOver" Value="True">
-                                                        <Setter TargetName="Bd" Property="Background" Value="#B04B37" />
+                                                                <Setter TargetName="Bd" Property="Background" Value="#1F2935" />
                                                         <Setter Property="Foreground" Value="White" />
                                                     </Trigger>
                                                     <Trigger Property="IsSelected" Value="True">
-                                                        <Setter TargetName="Bd" Property="Background" Value="#B04B37" />
+                                                                <Setter TargetName="Bd" Property="Background" Value="#10161D" />
                                                         <Setter Property="Foreground" Value="White" />
                                                     </Trigger>
                                                     <Trigger Property="IsEnabled" Value="False">
@@ -120,27 +178,42 @@
                         </ListBox>
                             
                         </StackPanel>
+                    <Button Content="Clear"
+                        ToolTip="Clear all notes"
+                        Click="ClearHistory"
+                        Background="#1F2935" Height="40"
+                        Foreground="White" Margin="0">
+                                <Button.Style>
+                                    <Style TargetType="Button">
+                                        <Setter Property="Background" Value="#2C3E50"/>
+                                        <Setter Property="Foreground" Value="White"/>
+                                        <Setter Property="BorderThickness" Value="0"/>
+                                        <Setter Property="FontSize" Value="14"/>
+                                        <Setter Property="Cursor" Value="Hand"/>
+                                        <Setter Property="Template">
+                                            <Setter.Value>
+                                                <ControlTemplate TargetType="Button">
+                                                    <Border Background="{TemplateBinding Background}" CornerRadius="12">
+                                                        <ContentPresenter HorizontalAlignment="Center" VerticalAlignment="Center"/>
+                                                    </Border>
+                                                </ControlTemplate>
+                                            </Setter.Value>
+                                        </Setter>
+                                        <Style.Triggers>
+                                            <Trigger Property="IsMouseOver" Value="True">
+                                                <Setter Property="Background" Value="#1F2935"/>
+                                            </Trigger>
+                                        </Style.Triggers>
+                                    </Style>
+                                </Button.Style>
+                    </Button>
                             
                         </StackPanel>
 
 
                     </Border>
 
-                            <Button Content="Clear"
-                        ToolTip="Clear all notes"
-                        Click="ClearHistory" Margin="5">
-                        <Button.Style>
-                            <Style TargetType="Button" BasedOn="{StaticResource MaterialDesignFlatButton}">
-                                <Setter Property="Background" Value="#E0A363"/>
-                                <Setter Property="Foreground" Value="Black"/>
-                                <Style.Triggers>
-                                    <Trigger Property="IsMouseOver" Value="True">
-                                        <Setter Property="Background" Value="#B04B37"/>
-                                    </Trigger>
-                                </Style.Triggers>
-                            </Style>
-                        </Button.Style>
-                    </Button>
+
 
 
                 </StackPanel>
