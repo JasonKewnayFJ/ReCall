@@ -19,6 +19,7 @@ namespace ReCall___.ViewModel
     {
         public event PropertyChangedEventHandler PropertyChanged;
         public ObservableCollection<string> NotesList { get; } = new ObservableCollection<string>();
+        CancellationTokenSource _cts = new CancellationTokenSource();
 
 
         private string _currentBoardNote;
@@ -61,14 +62,14 @@ namespace ReCall___.ViewModel
                 { return; }
                 NotesList.Add(CurrentBoardNote);
             }
-            await BoardChecker();
+            await BoardChecker(_cts.Token);
         }
 
 
 
-        public async Task BoardChecker ()
+        public async Task BoardChecker ( CancellationToken token )
         {
-            while (true)
+            while (!token.IsCancellationRequested)
             {
                 await Task.Delay(500);
 
@@ -77,42 +78,31 @@ namespace ReCall___.ViewModel
                 if (!string.IsNullOrEmpty(text) &&
                     text != CurrentBoardNote &&
                     text != PreviousBoardNote &&
-                    !NotesList.Contains(text))
+                    !NotesList.Contains(text.Trim()))
                 {
                     PreviousBoardNote = CurrentBoardNote;
                     CurrentBoardNote = text;
                     NotesList.Insert(0, CurrentBoardNote);
-
-                    Saver();
                 }
             }
         }
 
 
-
-        void Saver ()
+        public void StopChecker ()
         {
-            var SB = new StoryBoard()
-            {
-                CurrentBoardNote = this.CurrentBoardNote,
-                PreviousBoardNote = this.PreviousBoardNote,
-                Stories = NotesList.ToList(),
-            };
-
-            string json = JsonSerializer.Serialize(SB, new JsonSerializerOptions { WriteIndented = true });
-
-            
-
-
-            string folder = Environment.GetFolderPath(Environment.SpecialFolder.MyDocuments);
-            string path = System.IO.Path.Combine(folder, "user.json");
-
-            File.WriteAllText(path, json);
+            _cts?.Cancel();
         }
+
+
 
         public void ReUseNote (string selectedNote)
         {
             ClipboardService.SetText(selectedNote);
+        }
+
+        public void ClearAllNotes ()
+        {
+            NotesList.Clear();
         }
 
         protected void OnPropertyChanged ( string prop )

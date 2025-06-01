@@ -9,8 +9,8 @@
         WindowStyle="None"
         AllowsTransparency="True"
         Background="Transparent"
-        Title="MainWindow" MaxHeight="560" MinWidth="400" Height="6000" Width="450"> 
-    <Border CornerRadius="10" Background="#B04B37" Padding="10" MouseDown="Border_MouseDown" >
+        Title="MainWindow" MaxHeight="560" MinWidth="400" Height="600" Width="450">
+    <Border CornerRadius="10" Background="#E0A363" Padding="10" MouseDown="Border_MouseDown" >
         <Grid>
             <Grid.RowDefinitions>
                 <RowDefinition Height="Auto"/>
@@ -20,30 +20,30 @@
             </Grid.RowDefinitions>
 
             <StackPanel Grid.Row="0" Grid.RowSpan="2" VerticalAlignment="Center" >
-                <TextBlock Text="ReCall" Foreground="White" FontFamily="Consolas" FontSize="30" Margin="10 0 0 0" />
+                <TextBlock Text="ReCall" Foreground="Black" FontFamily="Consolas" FontSize="30" Margin="10 0 0 0" />
             </StackPanel>
 
             <StackPanel Orientation="Horizontal" Grid.Row="0" Grid.Column="3" HorizontalAlignment="Right" VerticalAlignment="Top" Margin="5" >
-                <Border CornerRadius="10" Background="#E0A363">
+                <Border CornerRadius="10" Background="#B04B37">
 
-                    <Button Content="▾" Click="CloseWindow" x:Name="HideBTN" Background="Transparent" Foreground="Black" BorderBrush="black" BorderThickness="0"/>
+                    <Button Content="▾" Click="HideWindow" x:Name="HideBTN" Background="Transparent" Foreground="Black" BorderBrush="black" BorderThickness="0" ToolTip="Hide it"/>
                 </Border>
 
 
 
-                <Border CornerRadius="10" Background="#E0A363" Margin="5 0 0 0">
-                    <Button Content="🞬" Click="ABSOLUTEClose" x:Name="CloseBTN"  Background="Transparent" Foreground="Black" BorderBrush="black" BorderThickness="0"/>
+                <Border CornerRadius="10" Background="#B04B37" Margin="5 0 0 0">
+                    <Button Content="🞬" Click="CloseWindow" x:Name="CloseBTN"  Background="Transparent" Foreground="Black" BorderBrush="black" BorderThickness="0" ToolTip="Shut it down"/>
                 </Border>
 
             </StackPanel>
 
 
 
-            <Border Grid.Row="2" Grid.RowSpan="2" Grid.Column="0" Grid.ColumnSpan="2" Background="#E0A363" CornerRadius="10" Margin="5" Padding="10">
+            <Border Grid.Row="2" Grid.RowSpan="2" Grid.Column="0" Grid.ColumnSpan="2" Background="#B04B37" CornerRadius="10" Margin="5" Padding="10">
             <StackPanel>
                     <Border CornerRadius="10" Background="White" Padding="5" Margin="0 0 0 3">
                         <StackPanel>
-                            <TextBlock Text="Нынешняя запись в Буфере:" HorizontalAlignment="Left" TextAlignment="Left" Background="Transparent"/>
+                            <TextBlock Text="Сurrent clipboard content:" HorizontalAlignment="Left" TextAlignment="Left" Background="Transparent"/>
                             <Separator Background="Black"/>
                             <ScrollViewer HorizontalScrollBarVisibility="Auto" VerticalScrollBarVisibility="Disabled">
                                 <TextBlock x:Name="Note" Text="{Binding CurrentBoardNote}"  HorizontalAlignment="Left" TextAlignment="Left" Background="Transparent" Height="50" />
@@ -55,7 +55,7 @@
                     </Border>
                     <Border CornerRadius="10" Background="White" Padding="5" Margin="0 0 0 3">
                         <StackPanel>
-                            <TextBlock Text="Предыдущая запись в Буфере:"  HorizontalAlignment="Stretch" TextAlignment="Left" Background="Transparent"/>
+                            <TextBlock Text="Previous clipboard content:"  HorizontalAlignment="Stretch" TextAlignment="Left" Background="Transparent"/>
                             <Separator Background="Black"/>
                             <ScrollViewer HorizontalScrollBarVisibility="Auto" VerticalScrollBarVisibility="Disabled">
                                 <TextBlock x:Name="PrevNote" Text="{Binding PreviousBoardNote}" HorizontalAlignment="Left" TextAlignment="Left" Background="Transparent"  Height="50" />
@@ -67,8 +67,14 @@
                 
                     <Border CornerRadius="10" Background="White" Padding="5" Margin="0 0 0 3">
 
-
-                        <ListBox ItemsSource="{Binding NotesList}" Height="280" HorizontalContentAlignment="Left" ScrollViewer.CanContentScroll="True" >
+                        <StackPanel>
+                        <StackPanel>
+                        <TextBlock Text="Clipboard History"/>
+                            
+                        </StackPanel>
+                            <Separator Background="Black"/>
+                            <StackPanel>
+                        <ListBox ItemsSource="{Binding NotesList}" Height="230" HorizontalContentAlignment="Left" ScrollViewer.CanContentScroll="True" >
                             <ListBox.ItemContainerStyle>
                                 <Style TargetType="ListBoxItem">
                                     <Setter Property="HorizontalContentAlignment" Value="Stretch" />
@@ -76,6 +82,7 @@
                                     <Setter Property="Margin" Value="2" />
                                     <Setter Property="Padding" Value="10" />
                                     <Setter Property="MaxHeight" Value="70" />
+                                    <Setter Property="ToolTip" Value="Click to Copy"/>
                                     <Setter Property="Template">
                                         <Setter.Value>
                                             <ControlTemplate TargetType="ListBoxItem">
@@ -111,9 +118,31 @@
                                 </Style>
                             </ListBox.ItemContainerStyle>
                         </ListBox>
+                            
+                        </StackPanel>
+                            
+                        </StackPanel>
 
 
                     </Border>
+
+                            <Button Content="Clear"
+                        ToolTip="Clear all notes"
+                        Click="ClearHistory" Margin="5">
+                        <Button.Style>
+                            <Style TargetType="Button" BasedOn="{StaticResource MaterialDesignFlatButton}">
+                                <Setter Property="Background" Value="#E0A363"/>
+                                <Setter Property="Foreground" Value="Black"/>
+                                <Style.Triggers>
+                                    <Trigger Property="IsMouseOver" Value="True">
+                                        <Setter Property="Background" Value="#B04B37"/>
+                                    </Trigger>
+                                </Style.Triggers>
+                            </Style>
+                        </Button.Style>
+                    </Button>
+
+
                 </StackPanel>
                 
             </Border>

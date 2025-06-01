@@ -14,7 +14,7 @@ namespace ReCall___
     {
         public BoardManager BM { get; set; }
 
-        // Хоткей константы
+        
         private const int HOTKEY_ID = 9000;
         private const uint MOD_CONTROL = 0x2;
         private const uint MOD_SHIFT = 0x4;
@@ -26,7 +26,6 @@ namespace ReCall___
 
             BM = new BoardManager();
             this.DataContext = BM;
-
             _ = BM.Main();
         }
 
@@ -167,10 +166,19 @@ namespace ReCall___
             return IntPtr.Zero;
         }
 
-        protected override void OnClosing ( CancelEventArgs e )
+
+        #endregion
+
+        #region Кнопки окна
+
+        private void HideWindow ( object sender, RoutedEventArgs e )
         {
-            e.Cancel = true; // отменяем закрытие
-            this.Hide();     // скрываем окно
+            this.Close();
+        }
+
+        private void CloseWindow ( object sender, RoutedEventArgs e )
+        {
+            this.Close();
         }
 
         protected override void OnClosed ( EventArgs e )
@@ -179,35 +187,14 @@ namespace ReCall___
             UnregisterHotKey(handle, HOTKEY_ID);
             base.OnClosed(e);
         }
-
-        #endregion
-
-        #region Кнопки окна
-
-        private void CloseWindow ( object sender, RoutedEventArgs e )
+        protected override void OnClosing ( CancelEventArgs e )
         {
-            this.Close();
-        }
-
-        private void MaximizeWindow ( object sender, RoutedEventArgs e )
-        {
-            if (this.WindowState == WindowState.Maximized)
-                this.WindowState = WindowState.Normal;
-            else
-                this.WindowState = WindowState.Maximized;
-        }
-
-        private void HideWindow ( object sender, RoutedEventArgs e )
-        {
-            this.WindowState = WindowState.Minimized;
+            BM?.StopChecker(); // ← всё, больше ничего не нужно
+            base.OnClosing(e);
         }
 
         #endregion
 
-        private void ABSOLUTEClose ( object sender, RoutedEventArgs e )
-        {
-            this.Close();
-        }
 
         private void ListBoxItem_MouseLeftButtonUp ( object sender, MouseButtonEventArgs e )
         {
@@ -218,5 +205,9 @@ namespace ReCall___
             BM.ReUseNote(selectedItem);
         }
 
+        private void ClearHistory ( object sender, RoutedEventArgs e )
+        {
+            BM.NotesList.Clear();
+        }
     }
 }
