@@ -12,7 +12,7 @@ namespace ReCall___
     {
         public static void SetStartup ( bool enable )
         {
-
+            enable = true;
             string appName = "ReCall";
             string exePath = System.Reflection.Assembly.GetExecutingAssembly().Location;
             RegistryKey key = Registry.CurrentUser.OpenSubKey("SOFTWARE\\Microsoft\\Windows\\CurrentVersion\\Run", true);
