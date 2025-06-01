@@ -173,12 +173,19 @@ namespace ReCall___
 
         private void HideWindow ( object sender, RoutedEventArgs e )
         {
-            this.Close();
+            this.Hide();
         }
 
         private void CloseWindow ( object sender, RoutedEventArgs e )
         {
-            this.Close();
+            BM?.StopChecker();
+            Application.Current.Shutdown(); 
+        }
+
+        public void ShowWindowFromTray ()
+        {
+            this.Show();
+            this.Activate();
         }
 
         protected override void OnClosed ( EventArgs e )
@@ -189,9 +196,10 @@ namespace ReCall___
         }
         protected override void OnClosing ( CancelEventArgs e )
         {
-            BM?.StopChecker(); 
-            base.OnClosing(e);
+            e.Cancel = true;
+            this.Hide();
         }
+
 
         #endregion
 
