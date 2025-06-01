@@ -1,53 +1,45 @@
-# 📝 ReCall — Clipboard History
+📝 ReCall — Clipboard History
+ReCall is a lightweight and utilitarian Windows application that keeps everything you've copied. It helps prevent losing data from the clipboard.
 
-ReCall is a lightweight and utilitarian Windows app that saves everything you copy. It helps prevent loss of data from the clipboard.
+🔍 Problem
+You copied an important text, accidentally overwrote it — and the needed content was gone.
+The clipboard stores only one value, and everything before it disappears.
 
-## 🔍 Problem
+✅ Solution
+ReCall saves the full clipboard history and allows you to quickly return to previous entries.
 
-You copy important text, accidentally overwrite it — and the needed data is lost.
-The clipboard only holds one value, and everything before it disappears.
+🚀 Features
+📌 History — everything you’ve copied stays in the app
 
-## ✅ Solution
-
-ReCall saves the full clipboard history and lets you quickly get back to the entries you need.
-
----
-
-## 🚀 Features
-
-📌 History — everything you copied stays in the app
 🧠 Current value — what’s currently in the clipboard
-🕓 Previous value — what was before it
-🧾 Full list — all entries in a convenient feed
 
----
+🕓 Previous value — what was there before
 
-## 🖱️ Controls
+🧾 Full list — all entries in a convenient timeline
 
-🔘 Left-click on an entry — instantly restores it to the clipboard
+🖱️ Controls
+🔘 LMB on an entry — instantly restores it to the clipboard
+
 📥 Hide — minimizes the app to the background
-❌ Exit — closes the app
+
+❌ Exit — fully closes the app
+
 🧊 Ctrl + Shift + R — global hotkey to open the app
 
----
+🛠️ Highlights
+Works on any Windows PC
 
-## 🛠️ Details
+Low resource usage and runs in the background
 
-Runs on any Windows PC
-Lightweight and runs silently in the background
 Minimalist interface without clutter
-Does not use cloud services, third-party tools, or telemetry
 
----
+No cloud, no third-party services, no telemetry
 
-## 📦 Updates
+📦 Updates
+I created ReCall for myself and use it daily.
+At this point, its functionality fully satisfies me.
 
-I built ReCall for myself and use it daily.
-At this stage, the functionality fully satisfies me.
+However, if you have ideas to improve the UX — feel free to email me.
+If the suggestion is reasonable — I’ll gladly implement it.
 
-However, if you have ideas to improve the UX — write me an email.
-If the suggestion makes sense, I’ll gladly implement it.
-
----
-
-> **ReCall** создан, чтобы ты больше никогда не терял важную информацию. Просто скопировал — и она осталась с тобой.
+ReCall is made so you never lose important information again. Just copy — and it stays with you.
