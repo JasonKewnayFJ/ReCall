@@ -1,5 +1,4 @@
-﻿using ReCall___.Model;
-using ReCall___.ViewModel;
+﻿using ReCall___.ViewModel;
 using System;
 using System.ComponentModel;
 using System.Runtime.InteropServices;
@@ -7,6 +6,8 @@ using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Input;
 using System.Windows.Interop;
+using System.Diagnostics;
+using TextCopy;
 
 namespace ReCall___
 {
@@ -14,7 +15,6 @@ namespace ReCall___
     {
         public BoardManager BM { get; set; }
 
-        
         private const int HOTKEY_ID = 9000;
         private const uint MOD_CONTROL = 0x2;
         private const uint MOD_SHIFT = 0x4;
@@ -23,15 +23,15 @@ namespace ReCall___
         public MainWindow ()
         {
             InitializeComponent();
-
             BM = new BoardManager();
             this.DataContext = BM;
             _ = BM.Main();
         }
 
         #region Перетаскивание окна + ресайз
-
         private const int WM_NCHITTEST = 0x0084;
+        private const int HTCLIENT = 1;
+        private const int HTCAPTION = 2;
         private const int HTLEFT = 10;
         private const int HTRIGHT = 11;
         private const int HTTOP = 12;
@@ -45,53 +45,59 @@ namespace ReCall___
         {
             if (msg == WM_NCHITTEST)
             {
+                if (this.WindowState == WindowState.Maximized)
+                {
+                    handled = false;
+                    return IntPtr.Zero;
+                }
+
                 Point pos = GetMousePosition();
-                int border = 8;
+                int resizeBorder = 8;
 
-                Rect windowRect = new Rect(this.Left, this.Top, this.Width, this.Height);
+                Point windowPos = this.PointToScreen(new Point(0, 0));
+                Rect windowRect = new Rect(windowPos.X, windowPos.Y, this.ActualWidth, this.ActualHeight);
 
-                if (pos.Y >= windowRect.Top && pos.Y < windowRect.Top + border)
+                bool isLeft = pos.X >= windowRect.Left && pos.X < windowRect.Left + resizeBorder;
+                bool isRight = pos.X <= windowRect.Right && pos.X > windowRect.Right - resizeBorder;
+                bool isTop = pos.Y >= windowRect.Top && pos.Y < windowRect.Top + resizeBorder;
+                bool isBottom = pos.Y <= windowRect.Bottom && pos.Y > windowRect.Bottom - resizeBorder;
+
+                if (isTop && isLeft)
                 {
-                    if (pos.X >= windowRect.Left && pos.X < windowRect.Left + border)
-                    {
-                        handled = true;
-                        return (IntPtr)HTTOPLEFT;
-                    }
-                    else if (pos.X <= windowRect.Right && pos.X > windowRect.Right - border)
-                    {
-                        handled = true;
-                        return (IntPtr)HTTOPRIGHT;
-                    }
-                    else
-                    {
-                        handled = true;
-                        return (IntPtr)HTTOP;
-                    }
+                    handled = true;
+                    return (IntPtr)HTTOPLEFT;
                 }
-                else if (pos.Y <= windowRect.Bottom && pos.Y > windowRect.Bottom - border)
+                else if (isTop && isRight)
                 {
-                    if (pos.X >= windowRect.Left && pos.X < windowRect.Left + border)
-                    {
-                        handled = true;
-                        return (IntPtr)HTBOTTOMLEFT;
-                    }
-                    else if (pos.X <= windowRect.Right && pos.X > windowRect.Right - border)
-                    {
-                        handled = true;
-                        return (IntPtr)HTBOTTOMRIGHT;
-                    }
-                    else
-                    {
-                        handled = true;
-                        return (IntPtr)HTBOTTOM;
-                    }
+                    handled = true;
+                    return (IntPtr)HTTOPRIGHT;
                 }
-                else if (pos.X >= windowRect.Left && pos.X < windowRect.Left + border)
+                else if (isBottom && isLeft)
+                {
+                    handled = true;
+                    return (IntPtr)HTBOTTOMLEFT;
+                }
+                else if (isBottom && isRight)
+                {
+                    handled = true;
+                    return (IntPtr)HTBOTTOMRIGHT;
+                }
+                else if (isTop)
+                {
+                    handled = true;
+                    return (IntPtr)HTTOP;
+                }
+                else if (isBottom)
+                {
+                    handled = true;
+                    return (IntPtr)HTBOTTOM;
+                }
+                else if (isLeft)
                 {
                     handled = true;
                     return (IntPtr)HTLEFT;
                 }
-                else if (pos.X <= windowRect.Right && pos.X > windowRect.Right - border)
+                else if (isRight)
                 {
                     handled = true;
                     return (IntPtr)HTRIGHT;
@@ -121,9 +127,45 @@ namespace ReCall___
         private void Border_MouseDown ( object sender, MouseButtonEventArgs e )
         {
             if (e.LeftButton == MouseButtonState.Pressed)
+            {
+                if (this.WindowState == WindowState.Maximized)
+                {
+                    this.WindowState = WindowState.Normal;
+
+                    Point mousePos = GetMousePosition();
+                    this.Left = mousePos.X - this.Width / 2;
+                    this.Top = mousePos.Y - 30;
+                }
+
                 this.DragMove();
+            }
         }
 
+        private void Border_MouseDoubleClick ( object sender, MouseButtonEventArgs e )
+        {
+            if (e.LeftButton == MouseButtonState.Pressed)
+            {
+                this.WindowState = this.WindowState == WindowState.Maximized
+                    ? WindowState.Normal
+                    : WindowState.Maximized;
+            }
+        }
+
+        private void InitializeWindowBehavior ()
+        {
+            var source = PresentationSource.FromVisual(this) as HwndSource;
+            source?.AddHook(WndProc);
+
+            this.MinWidth = 300;
+            this.MinHeight = 400;
+        }
+
+        protected override void OnClosed ( EventArgs e )
+        {
+            var source = PresentationSource.FromVisual(this) as HwndSource;
+            source?.RemoveHook(WndProc);
+            base.OnClosed(e);
+        }
         #endregion
 
         #region Хоткей + скрытие окна при закрытии
@@ -165,8 +207,6 @@ namespace ReCall___
             }
             return IntPtr.Zero;
         }
-
-
         #endregion
 
         #region Кнопки окна
@@ -179,7 +219,7 @@ namespace ReCall___
         private void CloseWindow ( object sender, RoutedEventArgs e )
         {
             BM?.StopChecker();
-            Application.Current.Shutdown(); 
+            Application.Current.Shutdown();
         }
 
         public void ShowWindowFromTray ()
@@ -188,33 +228,52 @@ namespace ReCall___
             this.Activate();
         }
 
-        protected override void OnClosed ( EventArgs e )
-        {
-            var handle = new WindowInteropHelper(this).Handle;
-            UnregisterHotKey(handle, HOTKEY_ID);
-            base.OnClosed(e);
-        }
         protected override void OnClosing ( CancelEventArgs e )
         {
             e.Cancel = true;
             this.Hide();
         }
-
-
         #endregion
-
 
         private void ListBoxItem_MouseLeftButtonUp ( object sender, MouseButtonEventArgs e )
         {
             var item = (ListBoxItem)sender;
-            var data = item.DataContext; 
+            var data = item.DataContext;
             string selectedItem = data?.ToString();
-            BM.ReUseNote(selectedItem);
         }
 
-        private void ClearHistory ( object sender, RoutedEventArgs e )
+        private void GitHubOpener ( object sender, RoutedEventArgs e )
         {
-            BM.NotesList.Clear();
+            try
+            {
+                Process.Start(new ProcessStartInfo
+                {
+                    FileName = "https://github.com/JasonKewnayFJ/ReCall",
+                    UseShellExecute = true
+                });
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show($"Не удалось открыть сайт: {ex.Message}");
+            }
         }
+
+        private void QuickPaste ( object sender, RoutedEventArgs e )
+        {
+            SearchBox.Text = ClipboardService.GetText();
+        }
+
+
+        private void CopyThis ( object sender, MouseButtonEventArgs e )
+        {
+            if (sender is TextBlock tb)
+            {
+                ClipboardService.SetText(tb.Text);
+                CopySnackbar.MessageQueue?.Enqueue("Скопировано");
+
+            }
+        }
+
     }
 }
+
